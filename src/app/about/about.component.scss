@@ -1,0 +1,16 @@
+.about-height{
+	height: 80vh;
+}
+
+.progress{
+	width : 0vw;
+	transition : width 1s ease;
+}
+.typewriter{
+animation: blinker 1s infinite;
+}
+@keyframes blinker {
+60% {
+opacity: 0;
+}
+}
