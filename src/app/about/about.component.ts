@@ -10,26 +10,26 @@ import { HelperService } from '../helper.service';
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
   animations: [
-    trigger('appearFromBottom',[
-      transition('void => *',[
-           style({
-                  transform: 'translateY(+40%)',
-                  opacity : '0.6'
-                }),
-                animate('.2s ease')
-        ])
-      ]),
-    trigger('popout',[
-
-      transition(':enter',[
-        style({
-          opacity : '.1',
-          transform: 'scale(0.2)'
-
-        }),
-        animate('0.4s ease')
-        ])
+  trigger('appearFromBottom',[
+    transition('void => *',[
+      style({
+        transform: 'translateY(+40%)',
+        opacity : '0.6'
+      }),
+      animate('.2s ease')
       ])
+    ]),
+  trigger('popout',[
+
+    transition(':enter',[
+      style({
+        opacity : '.1',
+        transform: 'scale(0.2)'
+
+      }),
+      animate('0.4s ease')
+      ])
+    ])
   ]
 })
 export class AboutComponent implements OnInit {
@@ -49,12 +49,12 @@ export class AboutComponent implements OnInit {
 
   ngOnInit(): void {
 
- this._helper.isLightTheme.subscribe((isLight:boolean) =>{
+    this._helper.isLightTheme.subscribe((isLight:boolean) =>{
       this.lightTheme = isLight;
     });
 
-    this.introductionText ="I'm Devansh Upadhyay, a web developer from India. Along with developing beautiful interfaces, I like reading books, about history & mythology, playing cricket & trying new things.Currently working in TCS, I develop interfaces for one of it's flagship products.";
-    this._startEmitting();
+
+    this.introductionText ="I'm Devansh Upadhyay, a web developer from India. Along with developing beautiful interfaces, I like reading books, about history & mythology, playing cricket & trying new things. Currently working in TCS, I develop interfaces for one of it's flagship products.";
     this.contactsList = [
     {
       name : 'gmail',
@@ -75,37 +75,34 @@ export class AboutComponent implements OnInit {
     ];
     this.skillsArray = [
     {
-      id: 4,
-      name: "Javascript",
-      assetName : 'javascript.svg',
+      id: 1,
+      name: "Higher Secondary",
       colorName : 'yellow-500',
-      percentage:'70%',
-      description:'for its popularity !'
-    },{
-      id: 3,
-      name: "Angular",
-      assetName : 'angular.svg',
-      colorName : 'pink-700',
-      percentage:'70%',
-      description:'for its completeness !'
-    },{
-      id: 2,
-      name: "Java",
-      assetName : 'java.svg',
-      colorName : 'indigo-300',
-      percentage:'70%',
-      description:'for its legacy !'
+      percentage:'100%',
+      description:'Scored 10/10 in 10 Std'
     },
     {
-      id: 1,
-      name: "Rxjs",
-      assetName : 'rxjs.svg',
+      id: 2,
+      name: "Senior Secondary",
       colorName : 'pink-500',
-      percentage:'50%',
-      description:'for some extra reactivity !'
+      percentage:'92%',
+      description:'Scored 92.8% in 12 Std'
+    },
+    {
+      id: 3,
+      name: "Graduation",
+      colorName : 'blue-500',
+      percentage:'76%',
+      description:'Scored 7.6 GPA in B.Tech.'
     }
-    ];
-
+     ];
+    if(this._helper.isHomeVisited){
+      this.shortCut();
+    }else{
+      
+      this._startEmitting();
+    }
+    this._helper.isHomeVisited = true;
   }
 
   private _startEmitting(){
@@ -120,7 +117,7 @@ export class AboutComponent implements OnInit {
       () => {
         this.showBlinker = true;
         this.populateContactMe();
-       
+        
       }
       );
   }
@@ -136,7 +133,7 @@ export class AboutComponent implements OnInit {
 
   private _academyText(){
 
-     return interval(this.textEmitInterval)
+    return interval(this.textEmitInterval)
     .pipe(
       take(this.academicText.length),
       tap((i) => this.academic += this.academicText[i])
@@ -146,8 +143,8 @@ export class AboutComponent implements OnInit {
   private populateSkillSet(){
 
     return interval(500).pipe(
-      take(4),
-     tap((i) => this.skillSet[i] = this.skillsArray[i])
+      take(3),
+      tap((i) => this.skillSet[i] = this.skillsArray[i])
       );
   }
 
@@ -160,5 +157,11 @@ export class AboutComponent implements OnInit {
       err => console.log(err),
       () =>  this.populateSkillSet().subscribe()
       );
+    }
+
+    private shortCut(){
+      this.introduction = this.introductionText;
+      this.contactVias = this.contactsList;
+      this.skillSet = this.skillsArray;
+    }
   }
-}

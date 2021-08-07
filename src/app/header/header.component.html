@@ -3,13 +3,13 @@
 	<div class="flex items-center justify-between h-10 mb-4 lg:mb-0  ">
 		<span class="grid-cols-2 flex">
 			<span class="flex rounded-lg pt-6">
-				<img class="h-20 object-cover rounded-full pt-2" src="../assets/header.jpg">
+				<img class="h-20 object-cover rounded-full pt-2" src="assets/header.jpg">
 			</span>
 			<span class="col-span-1 pl-2">
 				<h1 class="leading-none text-2xl text-grey-darkest pt-14">
-					<a class="no-underline text-grey-darkest hover:text-black dark:text-white" href="#">
+					<span class="no-underline cursor-pointer text-grey-darkest hover:text-black dark:text-white">
 						Devansh Upadhyay
-					</a>
+					</span>
 				</h1>
 			</span>
 		</span>
@@ -23,10 +23,10 @@
 	<nav class="m-4 pt-0 flex mr-10">
 		<span class="theme-toggle cursor-pointer pt-2 pr-4 hidden lg:flex" (click)="changeTheme()">
 			<span *ngIf="lightTheme" class="light-theme w-6 pt-1"  [@panelInOut]>
-				<img src="../assets/themes/light/light-theme-toggle.svg"> 				
+				<img src="assets/themes/light/light-theme-toggle.svg"> 				
 			</span>
 			<span *ngIf="!lightTheme" class="dark-theme w-6 pt-1"  [@panelInOut]>
-				<img src="../assets/themes/dark/dark-theme-toggle.svg">				
+				<img src="assets/themes/dark/dark-theme-toggle.svg">				
 				
 			</span>
 		</span>
@@ -34,7 +34,7 @@
 		<ul class="list-reset pt-3 lg:pl-3 flex lg:items-center justify-evenly w-40 lg:w-80 lg:border-l-2 lg:border-pink-600">
 			<span 
 			*ngFor="let option of menuOptions" class=" flex justify-center lg:w-full lg:pb-2 transition"
-			[ngClass]="[activeSelection && activeSelection.name === option.name ? 'border-b-2 border-pink-600' : '', option.isClickable ? '' : 'cursor-not-allowed']"
+			[ngClass]="[activeSelection && activeSelection.name === option.name ? 'border-b-2 border-pink-600' : '', option.isClickable ? 'cursor-pointer' : 'cursor-not-allowed']" (click)=menuSelectionChange(option.path)
 			>
 			<span class="block w-12 flex justify-center lg:hidden">
 				<span [ngClass]="lightTheme ? 'light-theme' : 'dark-theme'">
@@ -42,10 +42,10 @@
 				</span>
 				
 			</span>
-			<li class="w-20 justify-center hidden lg:flex">
-				<a class="block no-underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0 dark:text-white" href="#">
+			<li class="w-20 justify-center hidden lg:flex" [ngClass]="option.isClickable ? 'cursor-pointer' : 'cursor-not-allowed'">
+				<span class="block no-underline py-2 text-grey-darkest hover:text-black md:border-none md:p-0 dark:text-white">
 					{{ option.name }}
-				</a>
+				</span>
 			</li>
 		</span>
 	</ul>

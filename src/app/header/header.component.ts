@@ -29,7 +29,7 @@ trigger('panelInOut', [
 })
 export class HeaderComponent implements OnInit {
 
-  @Output() navigateTo: EventEmitter<number>  = new EventEmitter();
+  @Output() navigateTo: EventEmitter<string>  = new EventEmitter();
   public activeSelection?:{[key:string]:string|boolean};
   public menuOptions? : Array<{[key:string]:string|boolean}> = [];
   public lightTheme?: boolean = true;
@@ -44,33 +44,39 @@ export class HeaderComponent implements OnInit {
     this.menuOptions = [{
       id : '1',
       name : 'Home',
-      lightThemeLogo : '../assets/themes/light/light-home.svg',
-      darkThemeLogo : '../assets/themes/dark/dark-home.svg',
+      path : '',
+      lightThemeLogo : 'assets/themes/light/light-home.svg',
+      darkThemeLogo : 'assets/themes/dark/dark-home.svg',
       isClickable : true
     },
-    // {
-    //   id : '2',
-    //   name: 'Technologies',
-    //   lightThemeLogo : '../assets/themes/light/light-technologies.svg',
-    //   darkThemeLogo : '../assets/themes/dark/dark-technologies.svg',
-
-    // },
+    {
+      id : '2',
+      name: 'Projects',
+      path : 'projects',
+      lightThemeLogo : 'assets/themes/light/light-technologies.svg',
+      darkThemeLogo : 'assets/themes/dark/dark-technologies.svg',
+      isClickable : true
+    },
     {
       id : '3',
       name : 'Blog',
-      lightThemeLogo : '../assets/themes/light/light-blog.svg',
-      darkThemeLogo : '../assets/themes/dark/dark-blog.svg',
+      path : 'blog',
+      lightThemeLogo : 'assets/themes/light/light-blog.svg',
+      darkThemeLogo : 'assets/themes/dark/dark-blog.svg',
       isClickable : false
     }
   ];
     this.activeSelection = this.menuOptions[0];
   }
 
-  public menuSelectionChange(id :  number){
-    
+  public menuSelectionChange(path :  string | boolean){
+    path = path as string;
     if(this.menuOptions){
-      this.activeSelection = this.menuOptions.find((x) => +x.id === id);
-      this.navigateTo.emit(id);
+      const selOption = this.menuOptions.find((x) => x.path === path);
+      if( selOption && selOption.isClickable){
+        this.activeSelection = selOption;
+        this.navigateTo.emit(path);
+    }
     }
 
   }
