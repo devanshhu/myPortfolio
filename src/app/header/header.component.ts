@@ -16,12 +16,6 @@ trigger('panelInOut', [
                 }),
                 animate(100)
             ])
-            // transition('* => void', [
-            //   style({
-            //       transform: 'translateX(+10%)',
-            //       opacity : '0'}),
-            //     animate(1000)
-            // ])
         ])
 
 
