@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { AboutComponent } from './about/about.component';
 import { TechnologiesComponent } from './technologies/technologies.component';
 import { ContactComponent } from './contact/contact.component';
+import { DisplacementSphereComponent } from './about/displacement-sphere/displacement-sphere.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ContactComponent } from './contact/contact.component';
     HeaderComponent,
     AboutComponent,
     TechnologiesComponent,
-    ContactComponent
+    ContactComponent,
+    DisplacementSphereComponent
   ],
   imports: [
     BrowserModule,

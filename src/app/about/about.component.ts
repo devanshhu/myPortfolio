@@ -14,18 +14,18 @@ export class AboutComponent implements OnInit {
   camera!: THREE.PerspectiveCamera;
   starGeo!: THREE.BufferGeometry;
   // dat = new dat.GUI();
-  sphere!: THREE.Points<THREE.TorusGeometry, THREE.PointsMaterial>;
+  sphere!: THREE.Points<THREE.SphereGeometry, THREE.PointsMaterial>;
   loader!: THREE.TextureLoader;
   particlesMesh!: THREE.Points<
     THREE.BufferGeometry<THREE.NormalBufferAttributes>,
     THREE.PointsMaterial
   >;
   ngOnInit(): void {
-    this.initializeScene();
-    this.addTorusGeometry();
-    this.addParticles();
-    this.addPointLight();
-    this.render();
+    // this.initializeScene();
+    // this.addTorusGeometry();
+    // this.addParticles();
+    // this.addPointLight();
+    // this.render();
     // console.log(dat);
   }
 
@@ -56,7 +56,7 @@ export class AboutComponent implements OnInit {
   }
 
   addTorusGeometry() {
-    const torus = new THREE.TorusGeometry(0.7, 0.2, 16, 100);
+    const torus = new THREE.SphereGeometry(1.4, 100, 100, 100);
     const material = new THREE.PointsMaterial({
       color: 0xffffff,
       size: 0.005,
