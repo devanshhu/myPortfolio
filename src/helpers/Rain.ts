@@ -105,7 +105,7 @@ export class Rain {
       const drop = new THREE.Mesh(dropG, dropM);
       drop.position.set(
         Math.random() * 400 - 200,
-        Math.random() * 500 - 250,
+        Math.random() * 800,
         Math.random() * 400 - 200
       );
       (drop as any).velocity = {};
@@ -134,7 +134,7 @@ export class Rain {
       if (drop.position.y < -200) {
         drop.position.set(
           Math.random() * 400 - 200,
-          Math.random() * 500 - 250,
+          Math.random() * 800,
           Math.random() * 400 - 200
         );
 
