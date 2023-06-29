@@ -57,8 +57,7 @@ export class Rain {
     );
     this.camera.position.z = -1;
     this.camera.rotation.x = 1.2;
-    this.camera.rotation.y =
-      Math.ceil(Math.random() * 100) % 2 === 0 ? -0.1 : 0.1;
+    this.camera.rotation.y = -0.2;
   }
 
   addMesh() {
@@ -108,9 +107,9 @@ export class Rain {
   addRain() {
     // this.rainGeo = new THREE.BufferGeometry();
     for (let i = 0; i < this.rainCount; i++) {
-      const dropG = new THREE.SphereGeometry(0.8);
+      const dropG = new THREE.SphereGeometry(0.6);
       const dropM = new THREE.MeshLambertMaterial({
-        color: 0xaaaaaa,
+        color: 0x888888,
         transparent: true,
         map: this.loader.load('assets/three/cloud.png'),
       });
@@ -192,8 +191,8 @@ export class Rain {
     window.addEventListener('mousemove', (e) => {
       let changeX = e.clientX - this.oldX,
         changeY = e.clientY - this.oldY;
-      this.camera.rotation.y += -changeX / 10000;
-      this.camera.rotation.x += -changeY / 10000;
+      this.camera.rotation.y += -changeX / 20000;
+      this.camera.rotation.x += -changeY / 20000;
       this.oldX = e.clientX;
       this.oldY = e.clientY;
     });
