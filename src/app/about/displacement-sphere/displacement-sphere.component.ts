@@ -11,6 +11,6 @@ export class DisplacementSphereComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const sketch = new Rain();
+    const rain = new Rain();
   }
 }

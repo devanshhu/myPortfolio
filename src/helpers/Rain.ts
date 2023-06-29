@@ -1,5 +1,9 @@
 import { ElementRef } from '@angular/core';
 import * as THREE from 'three';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass';
 
 export class Rain {
   public elementRef: ElementRef;
@@ -17,18 +21,25 @@ export class Rain {
   rainGeo: any = [];
   rainCount: number = 1500;
   flash!: THREE.PointLight;
+  composer!: EffectComposer;
+  mouseX: any = window.innerWidth / 2;
+  oldX: any = window.innerWidth / 2;
+  mouseY: any = window.innerHeight / 2;
+  oldY: any = window.innerHeight / 2;
   constructor(element?: any) {
     this.elementRef = element;
     this.addLoader();
     this.addRenderer();
-    this.addMesh();
+    // this.addMesh();
     this.time = 0;
     this.addCamera();
     this.addAmbientLight();
     this.addDirectionalLight();
     this.addPointLight();
     this.addRain();
+    this.addLightning();
     this.render();
+    this.addMouseListener();
   }
 
   addRenderer() {
@@ -46,7 +57,8 @@ export class Rain {
     );
     this.camera.position.z = -1;
     this.camera.rotation.x = 1.2;
-    this.camera.rotation.y = -0.2;
+    this.camera.rotation.y =
+      Math.ceil(Math.random() * 100) % 2 === 0 ? -0.1 : 0.1;
   }
 
   addMesh() {
@@ -68,7 +80,7 @@ export class Rain {
     this.loader = new THREE.TextureLoader();
     this.loader.load('assets/three/cloud.png', (texture) => {
       const cloudGeo = new THREE.PlaneGeometry(800, 600);
-      const cloudMaterial = new THREE.MeshPhongMaterial({
+      const cloudMaterial = new THREE.MeshLambertMaterial({
         map: texture,
         transparent: true,
       });
@@ -109,7 +121,7 @@ export class Rain {
         Math.random() * 400 - 200
       );
       (drop as any).velocity = {};
-      (drop as any).velocity = 0;
+      (drop as any).velocity = -3;
       this.rainGeo.push(drop);
       this.scene.add(drop);
     }
@@ -117,6 +129,7 @@ export class Rain {
   render() {
     if (Math.random() > 0.93 || this.flash.power > 100) {
       if (this.flash.power < 100) {
+        // For lightning effect
         this.flash.position.set(
           Math.random() * 400,
           300 + Math.random() * 500,
@@ -125,11 +138,12 @@ export class Rain {
       }
       this.flash.power = 50 + Math.random() * 200;
     }
+    // For cloud rotation
     this.cloudParticles.forEach((p) => {
       p.rotation.z -= 0.002;
     });
+    // For moving droplets
     this.rainGeo.forEach((drop: any) => {
-      drop.velocity -= 1 * Math.random() * 0.1;
       drop.position.y += drop.velocity;
       if (drop.position.y < -200) {
         drop.position.set(
@@ -137,11 +151,51 @@ export class Rain {
           Math.random() * 800,
           Math.random() * 400 - 200
         );
-
-        drop.velocity = 0;
       }
     });
-    this.renderer.render(this.scene, this.camera);
+    this.composer.render();
     requestAnimationFrame(this.render.bind(this));
+  }
+
+  addLightning() {
+    const renderScene = new RenderPass(this.scene, this.camera);
+    const pointLight = new THREE.PointLight(0xffffff, 0, 500, 1.7);
+    this.camera.add(pointLight);
+    const unrealBloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      1,
+      1,
+      1
+    );
+    this.composer = new EffectComposer(this.renderer);
+    const vShader = document.getElementById('vertexshader') || undefined;
+    const fShader = document.getElementById('fragmentshader') || undefined;
+    const mixPass = new ShaderPass(
+      new THREE.ShaderMaterial({
+        uniforms: {
+          baseTexture: { value: null },
+          bloomTexture: { value: this.composer.renderTarget2.texture },
+        },
+        vertexShader: vShader?.textContent || '',
+        fragmentShader: fShader?.textContent || '',
+        defines: {},
+      }),
+      'baseTexture'
+    );
+    mixPass.needsSwap = true;
+    this.composer.addPass(mixPass);
+    this.composer.addPass(renderScene);
+    this.composer.addPass(unrealBloomPass);
+  }
+
+  addMouseListener() {
+    window.addEventListener('mousemove', (e) => {
+      let changeX = e.clientX - this.oldX,
+        changeY = e.clientY - this.oldY;
+      this.camera.rotation.y += -changeX / 10000;
+      this.camera.rotation.x += -changeY / 10000;
+      this.oldX = e.clientX;
+      this.oldY = e.clientY;
+    });
   }
 }
