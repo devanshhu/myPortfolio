@@ -63,16 +63,16 @@ export class ParticlesFlower {
   }
 
   addSettings() {
-    this.gui = new dat.GUI();
+    // this.gui = new dat.GUI();
     this.settings = {
       distortion: 1,
       threshold: 0,
       strength: 0,
       progress: 0,
     };
-    this.gui.add(this.settings, 'distortion', 0, 8, 0.01);
-    this.gui.add(this.settings, 'strength', 0, 10, 0.01);
-    this.gui.add(this.settings, 'progress', 0, 3, 0.01);
+    // this.gui.add(this.settings, 'distortion', 0, 8, 0.01);
+    // this.gui.add(this.settings, 'strength', 0, 10, 0.01);
+    // this.gui.add(this.settings, 'progress', 0, 3, 0.01);
     // this.gui.add(this.settings, 'radius', 0, 3, 0.01);
   }
   resize() {
@@ -135,9 +135,9 @@ export class ParticlesFlower {
       0.4,
       0.85
     );
-    this.bloomPass.threshold = this.settings.threshold;
-    this.bloomPass.strength = this.settings.strength;
-    this.bloomPass.radius = this.settings.radius;
+    this.bloomPass.threshold = 0;
+    this.bloomPass.strength = 0;
+    this.bloomPass.radius = 0;
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(this.renderScene);
     this.composer.addPass(this.bloomPass);
