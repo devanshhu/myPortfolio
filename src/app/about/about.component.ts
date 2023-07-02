@@ -43,7 +43,6 @@ export class AboutComponent implements OnInit {
       1000
     );
 
-    // this.camera.position.set(Math.PI / 2, 0, 1);
     this.camera.position.set(0, 0, 2);
   }
   render() {

@@ -1,20 +1,7 @@
-.about-height{
-	height: 80vh;
+:host{
+	width : 100vw;
+	background-color: black;
 }
-
-.progress{
-	width : 0vw;
-	transition : width 1s ease;
-}
-.typewriter{
-animation: blinker 1s infinite;
-}
-@keyframes blinker {
-60% {
-opacity: 0;
-}
-}
-
 .container{
 	height : 100vh;
 	width : 100vw;
@@ -23,16 +10,43 @@ opacity: 0;
 	align-items: center;
 	position: absolute;
 	.name-text{
+		position: absolute;
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 3rem;
+		font-size: 2.6rem;
 		color: white;
+		top: 50%;
+		left : 50%;
+		transform: translate(-50%, 200%);
+		z-index: 1001;
 		
+	}
+	.video{
+		position:absolute;
+		top : 0;
+		left : 0;
+		z-index : 1000;
+		// opacity: 0.5;
+		left : 50%;
+		top : 50%;
+		transform: translate(-50%, -50%);
+		width: 40vh;
+		height : 68.5vh;
+		box-sizing: border-box;
+		pointer-events: none;
+		video{
+			opacity : 0;
+			width:  100%;
+		}
 	}
 	@media only screen and (max-width: 800px) {
 		.name-text {
 		  font-size : 10vw;
 		}
 	  }
+}
+
+::ng-deep{
+	canvas { display: block;}
 }

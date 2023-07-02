@@ -191,8 +191,8 @@ export class Rain {
     window.addEventListener('mousemove', (e) => {
       let changeX = e.clientX - this.oldX,
         changeY = e.clientY - this.oldY;
-      this.camera.rotation.y += -changeX / 20000;
-      this.camera.rotation.x += -changeY / 20000;
+      this.camera.rotation.y += -changeX / 50000;
+      this.camera.rotation.x += -changeY / 50000;
       this.oldX = e.clientX;
       this.oldY = e.clientY;
     });

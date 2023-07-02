@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ParticlesFlower } from 'src/helpers/ParticleFlower/ParticleFlower';
 import { Rain } from 'src/helpers/Rain';
 import * as THREE from 'three';
 
@@ -11,6 +12,7 @@ export class DisplacementSphereComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    const rain = new Rain();
+    // const rain = new Rain();
+    new ParticlesFlower();
   }
 }
